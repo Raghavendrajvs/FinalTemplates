@@ -15,7 +15,7 @@
                         <td style="width: 382px" class="text-center"> Service Line : </td>
                         <td style="width: 486px" class="text-center">
                             &nbsp;
-                            <asp:DropDownList ID="DropDownList1" runat="server" CssClass="auto-style8" style="position: relative; left: -98px; top: 2px; width: 270px; height: 30px" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Name" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                            <asp:DropDownList ID="DropDownList1" runat="server" CssClass="auto-style8" style="position: relative; left: -98px; top: 2px; width: 270px; height: 30px; right: 98px;" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Name" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                             </asp:DropDownList>
                             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:NotificationHubConnectionString %>" SelectCommand="SELECT [Name], [Id] FROM [ServiceLine]"></asp:SqlDataSource>
                         </td>

@@ -12,36 +12,77 @@ namespace TemplateDAL.Repository
 {
     public class TemplateRepository
     {
-        public List<TemplateProp> templateProps = new List<TemplateProp>();
 
+        public List<TemplateProp> templateProps = new List<TemplateProp>();
+        public List<TemplateProp> templatevent = null;
+        public List<TemplateProp> template = null;
         public void getDetails()
         {
-            using (SqlConnection connection = new SqlConnection())
+
+
+            string sql = "select * from Source  ";
+            using (SqlCommand templateCommand = new SqlCommand(sql, ConnectionOpen()))
             {
-                connection.ConnectionString = "Data Source=ACUPC_120;Initial Catalog=NotificationHub;Integrated Security=True";
-                connection.Open();
-
-                string sql = "select * from Template, TemplateChannel ";
-                using (SqlCommand templateCommand = new SqlCommand(sql,connection))
+                // DataSet templateStore = new DataSet();
+                //templateAdapter.Fill(templateStore);
+                SqlDataReader templateReader = templateCommand.ExecuteReader();
+                while (templateReader.Read())
                 {
-                    //DataSet templateStore = new DataSet();
-                    //templateAdapter.Fill(templateStore);
-                    SqlDataReader templateReader = templateCommand.ExecuteReader();
-                    while (templateReader.Read())
+                    templateProps.Add(new TemplateProp
                     {
-                        templateProps.Add(new TemplateProp
-                        {
-                            //Id = Convert.ToInt32(templateReader["Id"]),
-                            Name = templateReader["Name"].ToString(),
-                            SourceName = templateReader["SourceName"].ToString(),
-                            EventName = templateReader["EventName"].ToString(),
-                        }
-                            );
-                    }
+                        SourceId = Convert.ToInt32(templateReader["Id"]),
+                        SourceName = templateReader["Name"].ToString(),
 
+                    });
                 }
+
             }
         }
+        public void getDetails1(int SourceId)
+        {
+            templatevent = new List<TemplateProp>();
+            string EventName = "select * from Event where SourceId=" + SourceId;
+            using (SqlCommand templateCommand = new SqlCommand(EventName, ConnectionOpen()))
+            {
+                // DataSet templateStore = new DataSet();
+                //templateAdapter.Fill(templateStore);
+                SqlDataReader templateReader = templateCommand.ExecuteReader();
+                while (templateReader.Read())
+                {
+                    templatevent.Add(new TemplateProp
+                    {
+                        EventId = Convert.ToInt32(templateReader["Id"]),
+                        EventName = templateReader["Name"].ToString(),
+
+                    });
+                }
+
+            }
+        }
+        public void getDetails2(int EventId, int sourceId)
+        {
+            template = new List<TemplateProp>();
+            string templateName = "select distinct(t.Name), t.Id from Template t,  Event e where t.EventId=" + EventId+ "and e.SourceId = "+sourceId ;
+            using (SqlCommand templateCommand = new SqlCommand(templateName, ConnectionOpen()))
+            {
+                // DataSet templateStore = new DataSet();
+                //templateAdapter.Fill(templateStore);
+                SqlDataReader templateReader = templateCommand.ExecuteReader();
+                while (templateReader.Read())
+                {
+                    template.Add(new TemplateProp
+                    {
+                        Id = Convert.ToInt32(templateReader["Id"]),
+                        Name = templateReader["Name"].ToString(),
+
+                    });
+                }
+
+            }
+
+
+        }
+    
 
         public DataTable GetData(string query)
         {
@@ -60,10 +101,13 @@ namespace TemplateDAL.Repository
                         sda.SelectCommand = cmd;
                         sda.Fill(dt);
                     }
+
                 }
                 return dt;
             }
+
         }
+
         public SqlConnection con = null;
         public SqlConnection ConnectionOpen()
         {
@@ -73,13 +117,13 @@ namespace TemplateDAL.Repository
             return con;
         }
 
-        public SqlConnection connectionClose()
-        {
-            con.Close();
+       public SqlConnection connectionClose()
+       {
+           con.Close();
             return con;
         }
 
-        public int ServiceLineID( string ServiceLineName)
+        public int ServiceLineID(string ServiceLineName)
         {
             int SLN = 0;
             string SLNquery = "select Id from ServiceLine where Name='" + ServiceLineName + "'";
@@ -97,10 +141,9 @@ namespace TemplateDAL.Repository
         int EventId = 0;
         public int EventID(string EventName)
         {
-            
-            string ENquery = "select Id from Event where Name='" + EventName + "'";
-            using (SqlCommand ServicelineIdCommand2 = new SqlCommand(ENquery, ConnectionOpen()))
-            {
+           string ENquery = "select Id from Event where Name='" + EventName + "'";
+           using (SqlCommand ServicelineIdCommand2 = new SqlCommand(ENquery, ConnectionOpen()))
+           {
                 SqlDataReader ServiceReader2 = ServicelineIdCommand2.ExecuteReader();
                 while (ServiceReader2.Read())
                 {
@@ -113,7 +156,6 @@ namespace TemplateDAL.Repository
         int ChannelId = 0;
         public int ChannelID(string ChannelName)
         {
-           
             string CNquery = "select Id from Channel where Name='" + ChannelName + "'";
             using (SqlCommand ServicelineIdCommand3 = new SqlCommand(CNquery, ConnectionOpen()))
             {
@@ -126,70 +168,71 @@ namespace TemplateDAL.Repository
             }
             return ChannelId;
         }
-
-        public void Create( string Name, string OperationaManagerId, string ServiceLineName, string EventName )
+    
+        public void Create(string Name, string OperationaManagerId, string ServiceLineName, string EventName)
         {
-                string sql = "Insert Into Template " +
-                            "( Name, OperationManagerId, ServiceLineId, EventId, ApprovalStatusId) Values " +
-                            "( @Name, @OperationManagerId, @ServiceLineId, @EventId, @ApprovalStatusId)";
+            string sql = "Insert Into Template " +
+                        "( Name, OperationManagerId, ServiceLineId, EventId, ApprovalStatusId) Values " +
+                        "( @Name, @OperationManagerId, @ServiceLineId, @EventId, @ApprovalStatusId)";
 
-                using (SqlCommand command = new SqlCommand(sql, ConnectionOpen()))
+            using (SqlCommand command = new SqlCommand(sql, ConnectionOpen()))
+            {
+                SqlParameter parameter = new SqlParameter
                 {
-                        SqlParameter parameter = new SqlParameter
-                        {
-                            ParameterName = "@Name",
-                            Value = Name,
-                            SqlDbType = SqlDbType.Char,
-                            Size = 10,
-                        };
-                    command.Parameters.Add(parameter);
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@OperationManagerId",
-                        Value = OperationaManagerId,
-                        SqlDbType = SqlDbType.NVarChar,
-                        Size = 100,
-                    };
+                    ParameterName = "@Name",
+                    Value = Name,
+                    SqlDbType = SqlDbType.Char,
+                    Size = 10,
+                };
                 command.Parameters.Add(parameter);
 
                 parameter = new SqlParameter
-                    {
-                        ParameterName = "@ServiceLineId",
-                        Value = ServiceLineID(ServiceLineName),
-                        SqlDbType = SqlDbType.Int,
-                        Size = 10,
-                    };
-                    command.Parameters.Add(parameter);
+                {
+                    ParameterName = "@OperationManagerId",
+                   Value = OperationaManagerId,
+                    SqlDbType = SqlDbType.NVarChar,
+                    Size = 100,
+                };
+                command.Parameters.Add(parameter);
 
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@EventId",
-                        Value = EventID(EventName),
-                        SqlDbType = SqlDbType.Int,
-                        Size = 10,
-                    };
-                    command.Parameters.Add(parameter);
-                
+                parameter = new SqlParameter
+                {
+                    ParameterName = "@ServiceLineId",
+                    Value = ServiceLineID(ServiceLineName),
+                    SqlDbType = SqlDbType.Int,
+                    Size = 10,
+                };
+                command.Parameters.Add(parameter);
 
-                    parameter = new SqlParameter
-                    {
-                        ParameterName = "@ApprovalStatusId",
-                        Value = 1,
-                        SqlDbType = SqlDbType.Int,
-                        Size = 10
-                    };
-                    command.Parameters.Add(parameter);
-                    command.ExecuteNonQuery();
-                   
+                parameter = new SqlParameter
+                {
+                    ParameterName = "@EventId",
+                    Value = EventID(EventName),
+                    SqlDbType = SqlDbType.Int,
+                    Size = 10,
+                };
+                command.Parameters.Add(parameter);
+
+                parameter = new SqlParameter
+                {
+                    ParameterName = "@ApprovalStatusId",
+                    Value = 1,
+                   SqlDbType = SqlDbType.Int,
+                    Size = 10
+                };
+                command.Parameters.Add(parameter);
+
+                command.ExecuteNonQuery();
+
                 connectionClose();
-                }
-               
-            
 
+            }
 
         }
-        public void Delete(int Id)
-        {
+
+       public void Delete(int Id)
+
+       {
             using (SqlConnection connection = new SqlConnection())
             {
                 connection.ConnectionString = "Data Source=ACUPC_120;Initial Catalog=NotificationHub;Integrated Security=True";
@@ -198,11 +241,9 @@ namespace TemplateDAL.Repository
                 string sql = $"Delete from Template where Id = '{Id}'";
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
-                    
-                   try
+                    try
                     {
-
-                        cmd.ExecuteNonQuery();
+                       cmd.ExecuteNonQuery();
                     }
                     catch (SqlException ex)
                     {
@@ -210,7 +251,6 @@ namespace TemplateDAL.Repository
                         throw error;
                     }
                 }
-            
                 connection.Close();
             }
         }
@@ -218,10 +258,7 @@ namespace TemplateDAL.Repository
         //public void getdetails()
         //{
 
-
         //}
 
-
-       
     }
 }

@@ -5,10 +5,6 @@
         <br />
         <h1>Templates </h1>
         <br />
-        <asp:TreeView ID="TreeView1" runat="server" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" Width="111px">
-           
-           
-        </asp:TreeView>
         <br />
        
         <br />

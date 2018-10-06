@@ -4,3 +4,9 @@ D:\RAGHU ASP.NET\NHUB\TemplateDAL\obj\Debug\TemplateDAL.csproj.CoreCompileInputs
 D:\RAGHU ASP.NET\NHUB\TemplateDAL\obj\Debug\TemplateDAL.dll
 D:\RAGHU ASP.NET\NHUB\TemplateDAL\obj\Debug\TemplateDAL.pdb
 D:\RAGHU ASP.NET\NHUB\TemplateDAL\obj\Debug\TemplateDAL.csprojAssemblyReference.cache
+D:\FinalTemplates\NHUB\TemplateDAL\bin\Debug\TemplateDAL.dll
+D:\FinalTemplates\NHUB\TemplateDAL\bin\Debug\TemplateDAL.pdb
+D:\FinalTemplates\NHUB\TemplateDAL\obj\Debug\TemplateDAL.csprojAssemblyReference.cache
+D:\FinalTemplates\NHUB\TemplateDAL\obj\Debug\TemplateDAL.csproj.CoreCompileInputs.cache
+D:\FinalTemplates\NHUB\TemplateDAL\obj\Debug\TemplateDAL.dll
+D:\FinalTemplates\NHUB\TemplateDAL\obj\Debug\TemplateDAL.pdb

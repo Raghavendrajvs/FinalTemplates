@@ -20,26 +20,26 @@ namespace NHUB
         {
             Response.Redirect("Template.aspx");
         }
-
         protected void Button3_Click(object sender, EventArgs e)
         {
+
             TemplateRepository tr = new TemplateRepository();
             tr.getDetails();
-           
 
-            tr.Create(TextBox1.Text,Context.User.Identity.GetUserId(), DropDownList1.Text, DropDownList2.Text);
+            tr.Create(TextBox1.Text, Context.User.Identity.GetUserId(), DropDownList1.Text, DropDownList2.Text);
 
-              Response.Redirect("Template.aspx");
-              //Response.Redirect("ManagerApprovalPage.aspx");
-           
+            Response.Redirect("Template.aspx");
+
+            //Response.Redirect("ManagerApprovalPage.aspx");
 
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             TemplateRepository tr = new TemplateRepository();
-           
 
         }
+
     }
 }

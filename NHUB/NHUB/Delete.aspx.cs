@@ -22,7 +22,7 @@ namespace NHUB
         {
             queryString = Request.QueryString["Id"];
             TemplateRepository tr = new TemplateRepository();
-            tr.getDetails();
+           
             tr.Delete(Convert.ToInt32(queryString));
             Response.Redirect("Template.aspx");
         }

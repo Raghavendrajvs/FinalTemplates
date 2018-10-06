@@ -17,6 +17,8 @@ namespace TemplateDAL.Model
         public string Url;
         public int ApprovalStatusId;
         public string SourceName;
+        public int SourceId;
+        public int EventId;
 
     }
 }
