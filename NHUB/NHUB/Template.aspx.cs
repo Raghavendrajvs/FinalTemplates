@@ -54,19 +54,19 @@ namespace NHUB
             {
 
                 Label lb = new Label();
-                lb.Text = tr.templateProps[Sourcecount].SourceName + "<br/><br/>";
+                lb.Text = tr.templateProps[Sourcecount].SourceName + "<br/>";
                 lb.ID = "count";
                
                 PlaceHolder1.Controls.Add(lb);
                 tr.getDetails1(tr.templateProps[Sourcecount].SourceId);
-                for (int Eventcount = 0; Eventcount < tr.templatevent.Count; Eventcount++)
+                for (int Eventcount = 0; Eventcount < tr.templateevent.Count; Eventcount++)
                 {
 
                     Label lb1 = new Label();
-                    lb1.Text = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + tr.templatevent[Eventcount].EventName + "<br/><br/>";
+                    lb1.Text = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + tr.templateevent[Eventcount].EventName + "<br/>";
                     lb1.ID = "count";
                     PlaceHolder1.Controls.Add(lb1);
-                    tr.getDetails2(tr.templatevent[Eventcount].EventId, tr.templateProps[Sourcecount].SourceId);
+                    tr.getDetails2(tr.templateevent[Eventcount].EventId, tr.templateProps[Sourcecount].SourceId);
                     for (int Templatecount = 0; Templatecount < tr.template.Count; Templatecount++)
                     {
 
@@ -76,9 +76,7 @@ namespace NHUB
                         TableRow tableRow = new TableRow();
                         t.Rows.Add(tableRow);
                         TableCell tcell = new TableCell();
-                        Label lb2 = new Label();
-                       
-                       
+                        Label lb2 = new Label();                                      
                         lb2.Text = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + tr.template[Templatecount].Name;
                         lb2.ID = "count";
                         lb2.Width = 100;
@@ -95,16 +93,7 @@ namespace NHUB
                         PlaceHolder1.Controls.Add(Delete);
                         tableRow.Cells.Add(tcell);
 
-                        //HyperLink Configure = new HyperLink();
-                        //HyperLink Delete = new HyperLink();
-                        //Configure.Text = "Edit";
-                        //Configure.Width = 200;
-                        //string qstr = dataEvenets.Rows[i]["Id"].ToString();
-                        //Configure.NavigateUrl = "EditEvent?Id=" + dataEvenets.Rows[i]["Id"];
-                        //PlaceHolder1.Controls.Add(Configure);
-                        //Delete.Text = "Delete" + "<br/>";
-                        //Delete.NavigateUrl = "DeleteEvent?id=" + qstr;
-                        //PlaceHolder1.Controls.Add(Delete);
+                        
 
                     }
                 }

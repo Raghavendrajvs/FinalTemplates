@@ -14,7 +14,7 @@ namespace TemplateDAL.Repository
     {
 
         public List<TemplateProp> templateProps = new List<TemplateProp>();
-        public List<TemplateProp> templatevent = null;
+        public List<TemplateProp> templateevent = null;
         public List<TemplateProp> template = null;
         public void getDetails()
         {
@@ -40,7 +40,7 @@ namespace TemplateDAL.Repository
         }
         public void getDetails1(int SourceId)
         {
-            templatevent = new List<TemplateProp>();
+            templateevent = new List<TemplateProp>();
             string EventName = "select * from Event where SourceId=" + SourceId;
             using (SqlCommand templateCommand = new SqlCommand(EventName, ConnectionOpen()))
             {
@@ -49,7 +49,7 @@ namespace TemplateDAL.Repository
                 SqlDataReader templateReader = templateCommand.ExecuteReader();
                 while (templateReader.Read())
                 {
-                    templatevent.Add(new TemplateProp
+                    templateevent.Add(new TemplateProp
                     {
                         EventId = Convert.ToInt32(templateReader["Id"]),
                         EventName = templateReader["Name"].ToString(),
